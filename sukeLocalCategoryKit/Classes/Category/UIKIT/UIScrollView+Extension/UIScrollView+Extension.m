@@ -1,0 +1,54 @@
+//
+//  UIScrollView+Extension.m
+//  BasicFramework
+//
+//  Created by Rainy on 16/10/26.
+//  Copyright © 2016年 Rainy. All rights reserved.
+//
+
+#import "UIScrollView+Extension.h"
+
+@implementation UIScrollView (Extension)
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [[self nextResponder] touchesBegan:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [[self nextResponder] touchesMoved:touches withEvent:event];
+    [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [[self nextResponder] touchesEnded:touches withEvent:event];
+    [super touchesEnded:touches withEvent:event];
+}
+
+#pragma mark - custom refresh
+- (void)showRefreshHeader:(void(^)(void))downBlock
+{
+    self.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        downBlock();
+    }];
+}
+
+- (void)showRefreshFotter:(void(^)(void))upBlock
+{
+    MJRefreshAutoStateFooter * fotterV=[MJRefreshAutoStateFooter footerWithRefreshingBlock:^{
+        upBlock();
+    }];
+    fotterV.automaticallyRefresh=NO;
+    self.mj_footer=fotterV;
+}
+
+- (void)hiddenRefreshHeader
+{
+    [self.mj_header endRefreshing];
+}
+- (void)hiddenRefreshFotter
+{
+    [self.mj_footer endRefreshing];
+}
+
+@end
