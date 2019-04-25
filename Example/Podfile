@@ -1,0 +1,6 @@
+use_frameworks!
+target 'sukeLocalCategoryKit_Tests' do
+  pod 'sukeLocalCategoryKit', :path => '../'
+  
+  
+end
